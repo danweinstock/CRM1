@@ -64,8 +64,11 @@ class CRM
 		print "Note: "
 		note = gets.chomp
 
+		puts "Your id is: #{@rolodex.current_id} "
+
 		new_contact = Contact.new(first_name, last_name, email, note)
 		@rolodex.add_contact(new_contact)
+
 	end
 
 	def modify_contact
@@ -76,22 +79,26 @@ class CRM
 	def display_contact
 		puts "Please enter the customer ID you wish to display."
 		id = gets.chomp.to_i
-		puts contacts.rolodex
+		@rolodex.display_contact(id)
 	end
 
 	def display_contacts
+		@rolodex.display_contacts
 	end
 
 	def display_info_by_attribute
 		puts "Please enter which ID you wish to view."
 		id = gets.chomp.to_i
+
 	end
 
 	def delete_contact
 		puts "Please enter the id you wish to delete."
 		id = gets.chomp.to_i
 		puts "Are you sure? [Y or N]"
+		y_or_n = gets.chomp
 		if y_or_n == "Y"
+			@rolodex.delete_contact(id)
 		end	
 	end
 

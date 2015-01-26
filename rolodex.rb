@@ -1,7 +1,7 @@
 class Rolodex
 	def initialize
 		@contacts = []
-		@id = 1000
+		@@id = 1000
 	end
 
 	def contacts
@@ -9,10 +9,13 @@ class Rolodex
 	end
 
 	def add_contact(contact)
-		contact.id = @id
+		contact.id = @@id
 		@contacts << contact
-		@id += 1
-		contact
+		@@id += 1	
+	end
+
+	def current_id
+		@@id
 	end
 
 	def display_contacts
@@ -24,8 +27,12 @@ class Rolodex
 		end	
 	end
 
+	def find_contact(id)
+		@contacts.select{ |contact| contact.id == id}.first
+	end
+
 	def display_contact(id)
-		c = @contacts.select{ |contact| contact.id == id}.first
+		c = find_contact(id)
 		puts "Name #{c.first_name} #{c.last_name}"
 		puts "Email #{c.email}"
 		puts "Note #{c.note}"
@@ -35,6 +42,8 @@ class Rolodex
 	def display_info_by_attribute
 	end
 
-	def delete_contact
+	def delete_contact(id)
+		contact = find_contact(id)
+		@contacts.delete(contact)
 	end
 end
