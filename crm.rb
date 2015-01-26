@@ -1,12 +1,13 @@
 require_relative './rolodex.rb'
 require_relative './contact.rb'
-
-class	CRM
+class CRM
+	
 	attr_reader :name
 
 	def initialize(name)
+		puts "Okay, this CRM has the name " + name
 		@name = name
-		@roledex = Rolodex.new
+		@rolodex = Rolodex.new
 	end
 
 	def print_main_menu
@@ -15,16 +16,17 @@ class	CRM
 		puts "[3] Display all contacts"
 		puts "[4] Display one contact"
 		puts "[5] Display an attribute"
-		puts "[6] Delect a contact"
+		puts "[6] Delete a contact"
 		puts "[7] Exit"
 		puts "Enter a number:"
 	end
 
 	def main_menu
 		puts "Welcome to #{@name}"
+
 		while true
 			print_main_menu
-			input = gets.chomp.to_i # => 4
+			input = gets.chomp.to_i
 			choose_option(input)
 			return if input == 7
 		end
@@ -32,13 +34,12 @@ class	CRM
 	end
 
 	def choose_option (option)
-		# => option = 4
 		case option
 		when 1 then add_contact
 		when 2 then modify_contact
 		when 3 then display_contacts
 		when 4 then display_contact
-		when 5 then display_attribute
+		when 5 then display_info_by_attribute
 		when 6 then delete_contact
 		when 7
 			puts "Goodbye"
@@ -46,29 +47,54 @@ class	CRM
 		else 
 			puts "Incorrect option, try again."
 		end
-	# 	puts "Inside choose option: #{option}"
 	end
+
 	def add_contact
 		puts "Provide contact details"
+		
 		print "First Name: "
-		first_name=gets.chomp
-
+		first_name = gets.chomp
+		
 		print "Last Name: "
-		last_name=gets.chomp
+		last_name = gets.chomp
 
 		print "Email: "
-		email=gets.chomp
+		email = gets.chomp
 
 		print "Note: "
-		note=gets.chomp
+		note = gets.chomp
 
 		new_contact = Contact.new(first_name, last_name, email, note)
 		@rolodex.add_contact(new_contact)
 	end
 
-end
+	def modify_contact
+		puts "Please enter which aspect of your contact information you would like to change"
+		
+	end
 
+	def display_contact
+		puts "Please enter the customer ID you wish to display."
+		id = gets.chomp.to_i
+		puts contacts.rolodex
+	end
+
+	def display_contacts
+	end
+
+	def display_info_by_attribute
+		puts "Please enter which ID you wish to view."
+		id = gets.chomp.to_i
+	end
+
+	def delete_contact
+		puts "Please enter the id you wish to delete."
+		id = gets.chomp.to_i
+		puts "Are you sure? [Y or N]"
+		if y_or_n == "Y"
+		end	
+	end
+
+end
 bitmaker = CRM.new("Bitmaker Labs CRM")
 bitmaker.main_menu
-
-puts bitmaker.name
