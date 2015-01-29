@@ -37,9 +37,9 @@ class CRM
 		case option
 		when 1 then add_contact
 		when 2 then modify_contact
-		when 3 then display_contacts
-		when 4 then display_contact
-		when 5 then display_info_by_attribute
+		when 3 then display_all_contacts
+		when 4 then display_a_contact
+		when 5 then display_attribute
 		when 6 then delete_contact
 		when 7
 			puts "Goodbye"
@@ -71,25 +71,48 @@ class CRM
 
 	end
 
-	def modify_contact
-		puts "Please enter which aspect of your contact information you would like to change"
+		def modify_contact
+
+		puts "Please enter the ID# of the user you'd like to modify"
+		id = gets.chomp.to_i
+		contact = @rolodex.find_contact(id)
+		puts contact
+
+		puts "Is this the correct user? (Y/N)"
+		answer = gets.chomp.capitalize
+		if answer == "Y"
+			@rolodex.modify_contact(contact)
+		else
+			modify_contact
+		end
 		
 	end
 
-	def display_contact
+	def display_a_contact
 		puts "Please enter the customer ID you wish to display."
 		id = gets.chomp.to_i
-		@rolodex.display_contact(id)
+		@rolodex.display_a_contact(id)
 	end
 
-	def display_contacts
-		@rolodex.display_contacts
+	def display_all_contacts
+		@rolodex.display_all_contacts
 	end
 
-	def display_info_by_attribute
-		puts "Please enter which ID you wish to view."
+		def display_attribute
+
+		puts "Please enter the ID# of the user whose attribute you'd like to search up"
 		id = gets.chomp.to_i
+		contact = @rolodex.find_contact(id)
+		puts contact
 
+		puts "Is this the correct user? (Y/N)"
+		answer = gets.chomp.capitalize
+		if answer == "Y"
+			@rolodex.display_attribute(contact)
+		else
+			display_attribute
+		end
+		
 	end
 
 	def delete_contact
